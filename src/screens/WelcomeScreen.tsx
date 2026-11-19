@@ -33,8 +33,8 @@ export function WelcomeScreen({ navigation }: Props) {
       <View style={[styles.card, { paddingBottom: bottom + spacing.xl }]}>
         <Text style={styles.greeting}>Bonjour ! 👋</Text>
         <Text style={styles.description}>
-          Je suis votre assistant étudiant intelligent. Posez votre question concernant votre vie
-          académique et obtenez rapidement une réponse.
+          Posez une question sur vos démarches universitaires. Une réponse est fournie lorsqu&apos;un
+          document validé contient l&apos;information recherchée.
         </Text>
         <Button
           title="Commencer une discussion"

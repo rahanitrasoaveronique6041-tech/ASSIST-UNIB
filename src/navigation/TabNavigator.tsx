@@ -3,19 +3,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { ChatScreen } from '../screens/ChatScreen';
 import { HistoryScreen } from '../screens/HistoryScreen';
 import { InfoScreen } from '../screens/InfoScreen';
+import { AdminScreen } from '../screens/AdminScreen';
 import { colors, fonts } from '../theme';
 import type { IconName } from '../types';
 import type { TabParamList } from './types';
+import { useAuth } from '../hooks/useAuth';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const TABS: Record<keyof TabParamList, { label: string; icon: IconName; activeIcon: IconName }> = {
   Chat: { label: 'Accueil', icon: 'home-outline', activeIcon: 'home' },
   History: { label: 'Historique', icon: 'time-outline', activeIcon: 'time' },
-  Info: { label: 'Informations', icon: 'information-circle-outline', activeIcon: 'information-circle' },
+  Info: { label: 'Profil', icon: 'person-circle-outline', activeIcon: 'person-circle' },
+  Admin: { label: 'Gestion', icon: 'settings-outline', activeIcon: 'settings' },
 };
 
 export function TabNavigator() {
+  const { profile } = useAuth();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => {
@@ -37,6 +41,7 @@ export function TabNavigator() {
       <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="History" component={HistoryScreen} />
       <Tab.Screen name="Info" component={InfoScreen} />
+      {profile && profile.role !== 'student' && <Tab.Screen name="Admin" component={AdminScreen} />}
     </Tab.Navigator>
   );
 }

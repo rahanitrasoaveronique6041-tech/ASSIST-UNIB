@@ -21,6 +21,16 @@ export interface BotReply {
   note?: string;
   action?: string;
   examples?: Suggestion[];
+  source?: string;
+  source_url?: string;
+  intent?: string;
+  intent_confidence?: number;
+  entities?: Record<string, string>;
+  support_question?: string;
+  verified?: boolean;
+  warning?: string;
+  conversation_id?: string;
+  message_id?: string;
 }
 
 export interface Message extends BotReply {

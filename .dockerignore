@@ -1,0 +1,7 @@
+.git
+.expo
+.pytest_cache
+node_modules
+dist
+backend/.venv
+backend/.pytest_cache

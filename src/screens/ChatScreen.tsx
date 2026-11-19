@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { FlatList, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, FlatList, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { ChatInput } from '../components/ChatInput';
 import { MessageBubble } from '../components/MessageBubble';
 import { QuickReplies } from '../components/QuickReplies';
@@ -9,10 +9,14 @@ import { useChat } from '../hooks/useChat';
 import { useExitToWelcome } from '../navigation/useExitToWelcome';
 import { colors, spacing } from '../theme';
 import type { Message } from '../types';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { TabParamList } from '../navigation/types';
 
-export function ChatScreen() {
+type Props = BottomTabScreenProps<TabParamList, 'Chat'>;
+
+export function ChatScreen({ route }: Props) {
   const exit = useExitToWelcome();
-  const { messages, send } = useChat();
+  const { messages, isLoading, send } = useChat(route.params?.conversationId);
   const listRef = useRef<FlatList<Message>>(null);
 
   const lastMessage = messages[messages.length - 1];
@@ -31,15 +35,16 @@ export function ChatScreen() {
         onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
         renderItem={({ item }) => <MessageBubble message={item} onSuggestionPress={send} />}
         ListFooterComponent={
-          showQuickReplies ? (
-            <View style={styles.footer}>
+          <View style={styles.footer}>
+            {isLoading && <ActivityIndicator color={colors.primary} />}
+            {showQuickReplies && (
               <QuickReplies
                 title={isFirstMessage ? 'Suggestions rapides :' : 'Vous pouvez aussi consulter :'}
                 topics={isFirstMessage ? QUICK_TOPICS : FOLLOW_UP_TOPICS}
                 onSelect={send}
               />
-            </View>
-          ) : null
+            )}
+          </View>
         }
       />
 

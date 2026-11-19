@@ -27,7 +27,7 @@ export function ScreenHeader({ title, onBack, variant = 'page' }: ScreenHeaderPr
         {isChat && (
           <View style={styles.status}>
             <View style={styles.statusDot} />
-            <Text style={styles.statusText}>En ligne</Text>
+            <Text style={styles.statusText}>Réponses sourcées</Text>
           </View>
         )}
       </View>
